@@ -12,11 +12,11 @@ public class StaffDAO implements IStaff {
     private final String passDb = "admin";
 
     private static final String SELECTALL = "select * from staff";
-    private static final String ADDSTAFF = "insert into staff(name,position,address,phone,active) VALUES(?,?,?,?,?);";
-    private static final String UPDATESTATUS = "update staff set active=? where id=?";
+    private static final String ADDSTAFF = "insert into staff(name,position,address,phone,status) VALUES(?,?,?,?,?);";
+    private static final String UPDATESTATUS = "update staff set status=? where id=?";
     private static final String UPDATESTAFF = "update staff set name=?, position=?,address=?,phone=?, status=? where id=?;";
     private static final String FINDBYNAME = "select * from staff WHERE name IN (?);";
-    private static final String SELECTWORKING = "select * from staff where active = 1";
+    private static final String SELECTWORKING = "select * from staff where status = 1";
 
     public StaffDAO() {
     }
@@ -100,6 +100,7 @@ public class StaffDAO implements IStaff {
             preparedStatement.setString(3, address);
             preparedStatement.setString(4, phone);
             preparedStatement.setInt(5, status);
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -172,7 +173,7 @@ public class StaffDAO implements IStaff {
         List<Staff> staffs = new ArrayList<>();
         try {
             Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECTWORKING);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECTALL);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");

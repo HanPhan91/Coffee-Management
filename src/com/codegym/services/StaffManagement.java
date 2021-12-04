@@ -55,9 +55,10 @@ public class StaffManagement {
                 String address = scanner.nextLine();
                 System.out.println("Enter phone number of staff: ");
                 String phone = scanner.nextLine();
-                if (regex.validate(phone))
+                if (regex.validate(phone)) {
                     services.addStaff(name, position, address, phone, 1);
-                else
+                    System.out.println("Done");
+                } else
                     System.out.println("Phone number invalid");
             } else
                 System.out.println("Please enter number 1-4");
@@ -110,8 +111,8 @@ public class StaffManagement {
                         if (regex.validate(phone))
                             if (services.updateStaff(id, name, position, address, phone, 1))
                                 System.out.println("Done");
-                        else
-                            System.out.println("Phone number invalid");
+                            else
+                                System.out.println("Phone number invalid");
                     } else
                         System.out.println("Please enter number 1-4");
                 } else
@@ -130,22 +131,66 @@ public class StaffManagement {
         else {
             System.out.println("Enter ID staff to update: ");
             try {
-                int id= Integer.parseInt(scanner.nextLine());
-                if (services.isExist(id)){
+                int id = Integer.parseInt(scanner.nextLine());
+                if (services.isExist(id)) {
                     if (services.updateStatus(id))
                         System.out.println("Done");
-                }
-                else
+                } else
                     System.out.println("ID not found");
 
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.err.println("Error.Wrong data");
             }
         }
     }
 
-    public void findByName(){
+    public void findById() {
+        System.out.println("Enter ID to search: ");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            Staff staff = services.getId(id);
+            if (staff == null)
+                System.out.println("ID not found");
+            else
+                System.out.println(staff.toString());
+        } catch (Exception e) {
+            System.err.println("Error. Wrong data");
+        }
+    }
 
+    public void findByName() {
+        System.out.println("Enter name to search: ");
+        String name = scanner.nextLine();
+        List<Staff> listStaff = services.findByName(name);
+        if (listStaff.isEmpty()) {
+            System.out.println("Not found");
+        } else {
+            for (Staff staff : listStaff) {
+                System.out.println(staff.toString());
+            }
+        }
+    }
+
+    public void sortByNameASC() {
+        services.sortByNameASC();
+    }
+
+    public void sortByNameDESC() {
+        services.sortByNameDESC();
+    }
+
+    public void sortByIdASC() {
+        services.sortByIdASC();
+    }
+
+    public void sortByIdDESC() {
+        services.sortByIdDESC();
+    }
+
+    public void showAllStaff() {
+        List<Staff> staffs = services.selectAllStaff();
+        for (Staff staff : staffs) {
+            System.out.println(staff.toString());
+        }
     }
 }

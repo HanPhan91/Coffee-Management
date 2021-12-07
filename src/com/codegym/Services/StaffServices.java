@@ -1,42 +1,26 @@
-package com.codegym.DAO;
+package com.codegym.Services;
 
 import com.codegym.Unit.Staff;
-
+import com.codegym.connector.MySqlConn;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffDAO implements IStaff {
-    private final String dbUrl = "jdbc:mysql://localhost:3306/coffee_manager";
-    private final String userDb = "root";
-    private final String passDb = "admin";
-
+public class StaffServices implements IStaff {
     private static final String SELECTALL = "select * from staff";
     private static final String ADDSTAFF = "insert into staff(name,position,address,phone,status) VALUES(?,?,?,?,?);";
     private static final String UPDATESTATUS = "update staff set status=? where id=?";
     private static final String UPDATESTAFF = "update staff set name=?, position=?,address=?,phone=?, status=? where id=?;";
-    private static final String FINDBYNAME = "select * from staff WHERE name IN (?);";
     private static final String SELECTWORKING = "select * from staff where status = 1";
+    private static final Connection connection= MySqlConn.getMySqlConnection();
 
-    public StaffDAO() {
-    }
-
-    protected Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(dbUrl, userDb, passDb);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    public StaffServices() {
     }
 
     @Override
     public List<Staff> selectAllStaffWorking() {
         List<Staff> staffs = new ArrayList<>();
         try {
-            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECTWORKING);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -59,7 +43,6 @@ public class StaffDAO implements IStaff {
     public boolean updateStaff(int id, String name, String position, String address, String phone, int status) {
         boolean check = false;
         try {
-            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATESTAFF);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, position);
@@ -79,7 +62,6 @@ public class StaffDAO implements IStaff {
     public boolean updateStatus(int id) {
         boolean check = false;
         try {
-            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATESTATUS);
             preparedStatement.setInt(1, 0);
             preparedStatement.setInt(1, id);
@@ -93,7 +75,6 @@ public class StaffDAO implements IStaff {
     @Override
     public void addStaff(String name, String position, String address, String phone, int status) {
         try {
-            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(ADDSTAFF);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, position);
@@ -126,7 +107,7 @@ public class StaffDAO implements IStaff {
         List<Staff> staffs = selectAllStaffWorking();
         List<Staff> results = new ArrayList<>();
         for (Staff staff : staffs) {
-            if (staff.getName().equalsIgnoreCase(name))
+            if (staff.getName().contains(name))
                 results.add(staff);
         }
         return results;
@@ -172,7 +153,6 @@ public class StaffDAO implements IStaff {
     public List<Staff> selectAllStaff() {
         List<Staff> staffs = new ArrayList<>();
         try {
-            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECTALL);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

@@ -1,6 +1,6 @@
-package com.codegym.services;
+package com.codegym.Management;
 
-import com.codegym.DAO.StaffDAO;
+import com.codegym.Services.StaffServices;
 import com.codegym.Unit.Staff;
 import com.codegym.regex.PhoneNumberInvalid;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StaffManagement {
-    final StaffDAO services = new StaffDAO();
+    final StaffServices services = new StaffServices();
     Scanner scanner = new Scanner(System.in);
     final PhoneNumberInvalid regex = new PhoneNumberInvalid();
 

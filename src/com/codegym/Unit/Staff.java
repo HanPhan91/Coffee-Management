@@ -8,7 +8,7 @@ public class Staff {
     private String phone;
     private int status;
 
-    public Staff() {
+    public Staff(int id, String name, String materials, double cost, double price, int status) {
     }
 
     public Staff(int id, String name, String position, String address, String phone, int status) {

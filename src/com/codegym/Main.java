@@ -1,14 +1,35 @@
 package com.codegym;
 
-import com.codegym.services.StaffManagement;
+import com.codegym.Management.DrinkManagement;
+import com.codegym.Management.OrderManagement;
+import com.codegym.Management.StaffManagement;
+import com.codegym.Management.UserManagement;
+import com.codegym.Services.UserServices;
 
 import java.util.Scanner;
 
 public class Main {
+    final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        UserManagement userManagement = new UserManagement();
+        System.out.println("Coffee Management Login");
+        System.out.println("Enter Username: ");
+        String username = scanner.nextLine();
+        System.out.println("Enter Password: ");
+        String password = scanner.nextLine();
+        int check = userManagement.checkLogin(username, password);
+        if (check == 1) {
+            clearScreen();
+            login();
+        } else if (check == 0)
+            System.out.println("User login");
+        else
+            System.out.println("Username or Password not match");
+    }
+
+    public static void login() {
         // write your code here
-        Scanner scanner = new Scanner(System.in);
         do {
             System.out.println("----------------------------------------------------------");
             System.out.println("| 1. Staffs management                                   |");
@@ -27,11 +48,11 @@ public class Main {
                             break;
                         case 2:
                             clearScreen();
-//                            drinkManagement();
+                            drinkManagement();
                             break;
                         case 3:
                             clearScreen();
-//                            orderManagement();
+                            orderManagement();
                             break;
                     }
                 } else if (number == 4) {
@@ -45,9 +66,86 @@ public class Main {
         } while (true);
     }
 
+    private static void orderManagement() {
+        OrderManagement orderManagement = new OrderManagement();
+        orderManagement.addOrder();
+    }
+
+    private static void drinkManagement() {
+        DrinkManagement drinkManagement = new DrinkManagement();
+        do {
+            System.out.println("-----------------------------------------Drinks management");
+            System.out.println("| 1. Show Menu                                           |");
+            System.out.println("| 2. Add new drink                                       |");
+            System.out.println("| 3. Update drink                                        |");
+            System.out.println("| 4. Remove drink                                        |");
+            System.out.println("| 5. Search by name                                      |");
+            System.out.println("| 6. Sort drink by name (A -> Z)                         |");
+            System.out.println("| 7. Sort drink by name (Z -> A)                         |");
+            System.out.println("| 8. Sort drink by price (ASC)                           |");
+            System.out.println("| 9. Sort drink by price (DESC)                         |");
+            System.out.println("| 10. Show all drink                                     |");
+            System.out.println("| 11. Exit                                               |");
+            System.out.println("----------------------------------------------------------");
+            System.out.println("Enter number of category: ");
+            try {
+                int number = Integer.parseInt(scanner.nextLine());
+                if (number > 0 && number < 11) {
+                    switch (number) {
+                        case 1:
+                            clearScreen();
+                            drinkManagement.showMenu();
+                            break;
+                        case 2:
+                            clearScreen();
+                            drinkManagement.addDrink();
+                            break;
+                        case 3:
+                            clearScreen();
+                            drinkManagement.updateDrink();
+                            break;
+                        case 4:
+                            clearScreen();
+                            drinkManagement.updateStatus();
+                            break;
+                        case 5:
+                            clearScreen();
+                            drinkManagement.findByName();
+                            break;
+                        case 6:
+                            clearScreen();
+                            drinkManagement.sortByNameASC();
+                            break;
+                        case 7:
+                            clearScreen();
+                            drinkManagement.sortByNameDESC();
+                            break;
+                        case 8:
+                            clearScreen();
+                            drinkManagement.sortByPriceASC();
+                            break;
+                        case 9:
+                            clearScreen();
+                            drinkManagement.sortByPriceDESC();
+                            break;
+                        case 10:
+                            clearScreen();
+                            drinkManagement.selectAllDrink();
+                            break;
+                    }
+                } else if (number == 11) {
+                    clearScreen();
+                    break;
+                } else
+                    System.out.println("Please enter number 1 - 10");
+            } catch (Exception e) {
+                System.err.println("Error. Need enter number");
+            }
+        } while (true);
+    }
+
     private static void staffManagement() {
         StaffManagement staffManagement = new StaffManagement();
-        Scanner scanner = new Scanner(System.in);
         do {
             System.out.println("------------------------------------------Staff management");
             System.out.println("| 1. Show all staff working                              |");

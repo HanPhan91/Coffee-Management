@@ -1,4 +1,4 @@
-package com.codegym.DAO;
+package com.codegym.Services;
 import com.codegym.Unit.Staff;
 import java.util.List;
 public interface IStaff {

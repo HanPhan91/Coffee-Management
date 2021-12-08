@@ -62,7 +62,7 @@ public class Main {
                             userManagement();
                             break;
                     }
-                } else if (number == 4) {
+                } else if (number == 5) {
                     System.out.println("Good bye");
                     break;
                 } else

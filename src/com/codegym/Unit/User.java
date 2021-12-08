@@ -71,6 +71,6 @@ public class User {
             strStatus= "active";
         else
             strStatus= "deactive";
-        return String.format("ID: %s | Password: %s | Roles: %s ID Staff: %d | Status: %s", username, password, strRoles, idStaff, strStatus);
+        return String.format("ID: %s | Password: %s | Roles: %s | ID Staff: %d | Status: %s", username, password, strRoles, idStaff, strStatus);
     }
 }

@@ -101,4 +101,12 @@ public class UserManagement {
                 System.out.println("Done");
         } else System.out.println("Username not found");
     }
+    public void searchByUser(){
+        System.out.println("Enter username: ");
+        String username = scanner.nextLine();
+        User user = services.getUser(username);
+        if (user != null) {
+            System.out.println(user.toString());
+        } else System.out.println("Username not found");
+    }
 }

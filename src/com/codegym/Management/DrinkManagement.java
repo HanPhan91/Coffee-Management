@@ -130,7 +130,7 @@ public class DrinkManagement {
     public void showMenu() {
         List<Drink> drinks= services.showMenu();
         System.out.println("############ MENU ############");
-        System.out.println("Drinks                                    -                                    Price");
+        System.out.println("Drinks  -  Price");
         for (Drink drink: drinks) {
             System.out.println(drink.menuToString());
         }
